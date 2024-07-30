@@ -1,0 +1,32 @@
+.formWrapper {
+  margin-bottom: 60px;
+  
+}
+
+.form {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.fieldWrapper {
+  text-align: start;
+}
+.field {
+ width: 520px;
+  padding: 8px;
+  font: inherit;
+  border-radius: 8px;
+}
+
+.field:focus {
+  outline-color: #1976d2;
+}
+
+.error {
+  color: red;
+}
+
+.error_field {
+  border: 1px solid red;
+}

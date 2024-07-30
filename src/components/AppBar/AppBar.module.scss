@@ -1,0 +1,16 @@
+.link {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1976d2;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  height: min-content;
+}
+
+.link:hover {
+  background-color: #1565c0;
+}
