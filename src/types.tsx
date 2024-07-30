@@ -1,44 +1,25 @@
 // Тип для состояния задач
-export interface TaskTypes {
+export interface FileTypes {
   _id: string;
-  boardId: string;
-  title: string;
-  text: string;
-  status: string;
+  name: string;
+  description: string;
+  size: string;
+  extension: string;
 }
 
-// Тип для доски
-export interface DashboardTypes {
-  _id: string;
-  title: string;
-  createdAt?: string; 
-  updatedAt?: string;
+// Тип для состояния файлов
+export interface FilesState {
+  files: FileTypes[];
 }
 
-// Тип для состояния досок
-export interface DashboardsState {
-  dashboards: DashboardTypes[];
-}
-
-// Определение типа значений формы задач
-export interface FormValues {
-  title: string;
-  text: string;
-}
-
-// Определение типа значений формы доски
-export interface DashboardFormValues {
-  dashboard: string;
+// Определение типа значений формы задачи
+export interface FileFormValues {
+  name: string;
+  description: string;
+  url: string;
 }
 
 // Определение типа значений формы поиска
 export interface SearchFormValues {
-  dashboardId: string;
-}
-
-// Определение типа значений формы задачи
-export interface TaskFormValues {
-  title: string;
-  text: string;
-  boardId: string;
+  id: string;
 }

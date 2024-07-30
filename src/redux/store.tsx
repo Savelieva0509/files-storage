@@ -1,10 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { tasksReducer } from './tasks-slice';
-import { dashboardsReducer } from './dashboards-slice';
+import { filesReducer } from './files-slice';
+
 
 export const store = configureStore({
   reducer: {
-    tasks: tasksReducer,
-    dashboards: dashboardsReducer,
+    files: filesReducer,
   },
 });
