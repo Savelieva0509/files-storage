@@ -1,10 +1,11 @@
+import FileList from '../FileList/FileList';
 import './App.scss';
 
 function App() {
   
   return (
     <div>
-     FILES
+     <FileList/>
     </div>
   );
 }

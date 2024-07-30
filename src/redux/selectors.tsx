@@ -1,3 +1,3 @@
 import { FilesState } from '../types';
 
-export const getFiles = (state: FilesState) => state.files;
+export const getFiles = (state: { files: FilesState }) => state.files.files;

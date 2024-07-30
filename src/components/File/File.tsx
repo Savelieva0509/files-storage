@@ -1,4 +1,4 @@
-import { Card, Form } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import css from './File.module.scss';
 
 import { FileTypes } from '../../types';
