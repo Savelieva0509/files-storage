@@ -1,18 +1,21 @@
 import { Card } from 'react-bootstrap';
 import css from './File.module.scss';
-
 import { FileTypes } from '../../types';
 
 type FileProps = {
   file: FileTypes;
 };
 
-const File = (file: FileProps) => {
+const File = ({ file }: FileProps) => {
   return (
-    <Card className={css.card} style={{ width: '25rem' }}>
+    <Card className={css.card}>
+      <img
+        src="/public/icons/frame.png"
+        alt="File icon"
+        className={css.cardImg} // Используйте этот класс для стилизации изображения
+      />
       <Card.Body>
-        <Card.Title>name</Card.Title>
-        <Card.Text>description</Card.Text>
+        <Card.Title>{file.name}</Card.Title>
       </Card.Body>
     </Card>
   );
