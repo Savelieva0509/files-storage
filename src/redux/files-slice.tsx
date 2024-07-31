@@ -24,7 +24,7 @@ const filesSlice = createSlice({
       console.error('Failed to fetch files:', action.error.message);
     });
     builder.addCase(addFile.fulfilled, (state, action) => {
-      state.files.push(action.payload);
+      state.files.unshift(action.payload);
     });
   },
 });

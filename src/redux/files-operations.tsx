@@ -18,9 +18,13 @@ export const allFiles = createAsyncThunk(
 );
 export const addFile = createAsyncThunk(
   'files/addFile',
-  async (file: FileFormValues, thunkAPI) => {
+  async (formData: FormData, thunkAPI) => {
     try {
-      const response = await axios.post(`/api/files`, file);
+      const response = await axios.post('/api/files', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
