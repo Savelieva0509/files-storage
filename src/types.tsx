@@ -3,8 +3,9 @@ export interface FileTypes {
   _id: string;
   name: string;
   description: string;
-  size: string;
+  size: number;
   extension: string;
+  url: string;
 }
 
 // Тип для состояния файлов

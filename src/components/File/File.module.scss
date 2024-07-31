@@ -5,12 +5,14 @@
   background-color: #181d3b;
   height: 100%;
   flex-grow: 1;
+  position: relative; /* Для позиционирования внутреннего контейнера */
+  cursor: pointer;
 }
 
 .iconWrapper {
   display: flex;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
   margin-bottom: 12px;
   border-radius: 12px;
   width: 100%;
@@ -19,7 +21,7 @@
 }
 
 .iconWrapper svg {
-  color: white; 
+  color: white;
 }
 
 .cardTitle {
@@ -28,13 +30,58 @@
   color: #ffffff;
 }
 
-.textarea {
+.cardInfo {
+  display: none;
+  background-color: #181d3b;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 16px;
+  color: white;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+  right: 0;
 }
 
-.buttonWrapper {
+.card.showInfo .cardInfo {
+  display: block; /* Показать дополнительную информацию при активации */
 }
 
-.btn {
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 16px;
+  padding-top: 8px;
+  border-bottom: 1px solid #ffffff1a;
+}
+
+.idValue {
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+.label {
+  line-height: 20px;
+  color: #ffffff80;
+}
+
+.value {
+  line-height: 20px;
+  color: #ffffff;
+}
+
+.openBtn {
+  width: 100%;
+  background-color: #ff8c8c;
+  border: 2px solid #ff8c8c;
+  color: #ffffff;
+  padding: 12px 24px 12px 24px;
+  border-radius: 40px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 24px;
 }
 
 .btn:hover {
