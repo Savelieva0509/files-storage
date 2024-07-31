@@ -1,6 +1,7 @@
-import { Card } from 'react-bootstrap';
-import css from './File.module.scss';
+
+import { FiFileText } from 'react-icons/fi';
 import { FileTypes } from '../../types';
+import css from './File.module.scss';
 
 type FileProps = {
   file: FileTypes;
@@ -8,16 +9,12 @@ type FileProps = {
 
 const File = ({ file }: FileProps) => {
   return (
-    <Card className={css.card}>
-      <img
-        src="/public/icons/frame.png"
-        alt="File icon"
-        className={css.cardImg} // Используйте этот класс для стилизации изображения
-      />
-      <Card.Body>
-        <Card.Title>{file.name}</Card.Title>
-      </Card.Body>
-    </Card>
+    <div className={css.card}>
+      <div className={css.iconWrapper}>
+        <FiFileText size={56} />
+      </div>
+      <div className={css.cardTitle}>{file.name}</div>
+    </div>
   );
 };
 
