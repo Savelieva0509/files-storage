@@ -33,7 +33,7 @@ const File = ({ file }: FileProps) => {
     Extension: file.extension,
     Description: file.description,
   };
-  
+
   const handleOpenFile = () => {
     window.open(file.url, '_blank');
   };
@@ -57,7 +57,11 @@ const File = ({ file }: FileProps) => {
               </p>
             </div>
           ))}
-          <button className={css.openBtn} onClick={handleOpenFile}>
+          <button
+            type="button"
+            className={css.openBtn}
+            onClick={handleOpenFile}
+          >
             Open
           </button>
         </div>

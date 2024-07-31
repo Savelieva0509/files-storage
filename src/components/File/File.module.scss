@@ -5,7 +5,7 @@
   background-color: #181d3b;
   height: 100%;
   flex-grow: 1;
-  position: relative; /* Для позиционирования внутреннего контейнера */
+  position: relative;
   cursor: pointer;
 }
 
@@ -44,8 +44,12 @@
   right: 0;
 }
 
+.showInfo {
+  border-radius: 12px 12px 0 0;
+}
+
 .card.showInfo .cardInfo {
-  display: block; /* Показать дополнительную информацию при активации */
+  display: block;
 }
 
 .infoItem {
@@ -82,14 +86,15 @@
   font-size: 18px;
   font-weight: 600;
   margin-top: 24px;
+  transition: background-color 0.3s ease;
 }
 
-.btn:hover {
+.openBtn:hover {
+  background-color: linear-gradient(0deg, #ff8c8c, #ff8c8c),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
 }
 
-.btn:active {
-}
-
-.card:hover,
-.card:active {
+.openBtn:active {
+  background-color: linear-gradient(0deg, #ff8c8c, #ff8c8c),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
 }
