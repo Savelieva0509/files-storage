@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FiFileText } from 'react-icons/fi';
 import { FileTypes } from '../../types';
+import Button from '../Button/Button';
 import css from './File.module.scss';
 
 type FileProps = {
@@ -57,13 +58,12 @@ const File = ({ file }: FileProps) => {
               </p>
             </div>
           ))}
-          <button
+          <Button
             type="button"
-            className={css.openBtn}
             onClick={handleOpenFile}
           >
             Open
-          </button>
+          </Button>
         </div>
       )}
     </div>

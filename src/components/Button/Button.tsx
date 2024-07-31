@@ -1,25 +1,18 @@
-import clsx from 'clsx';
 import css from './Button.module.scss';
 
 interface ButtonProps {
   type: 'submit' | 'button';
   children: React.ReactNode;
-  selected?: boolean;
   onClick?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = ({
   type,
   children,
-  selected = false,
-  ...otherProps
+    ...otherProps
 }) => {
   return (
-    <button
-      className={clsx(css.btn, { [css.isSelected]: selected })}
-      type={type}
-      {...otherProps}
-    >
+    <button className={css.button} type={type} {...otherProps}>
       {children}
     </button>
   );

@@ -76,25 +76,4 @@
   color: #ffffff;
 }
 
-.openBtn {
-  width: 100%;
-  background-color: #ff8c8c;
-  border: 2px solid #ff8c8c;
-  color: #ffffff;
-  padding: 12px 24px 12px 24px;
-  border-radius: 40px;
-  font-size: 18px;
-  font-weight: 600;
-  margin-top: 24px;
-  transition: background-color 0.3s ease;
-}
 
-.openBtn:hover {
-  background-color: linear-gradient(0deg, #ff8c8c, #ff8c8c),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
-}
-
-.openBtn:active {
-  background-color: linear-gradient(0deg, #ff8c8c, #ff8c8c),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
-}
