@@ -6,6 +6,7 @@ export interface FileTypes {
   size: number;
   extension: string;
   url: string;
+  downloadCount: number;
 }
 
 // Тип для состояния файлов
@@ -24,3 +25,4 @@ export interface FileFormValues {
 export interface SearchFormValues {
   id: string;
 }
+

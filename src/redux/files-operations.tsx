@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { FileFormValues } from '../types';
+import { UpdateDownloadCountPayload } from '../types';
 
 axios.defaults.baseURL = 'https://files-storage-backend.onrender.com';
 
@@ -24,6 +24,20 @@ export const addFile = createAsyncThunk(
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+      });
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateDownloadCount = createAsyncThunk(
+  'files/updateDownloadCount',
+  async ({ id, count }: { id: string; count: number }, thunkAPI) => {
+    try {
+      const response = await axios.patch(`/api/files/${id}/download`, {
+        downloadCount: count,
       });
       return response.data;
     } catch (error: any) {
