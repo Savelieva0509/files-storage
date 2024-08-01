@@ -61,11 +61,6 @@
   border-bottom: 1px solid #ffffff1a;
 }
 
-.idValue {
-  word-break: break-all;
-  overflow-wrap: break-word;
-}
-
 .label {
   line-height: 20px;
   color: #ffffff80;
@@ -74,6 +69,6 @@
 .value {
   line-height: 20px;
   color: #ffffff;
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
-
-
