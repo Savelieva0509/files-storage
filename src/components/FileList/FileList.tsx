@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { allFiles } from '../../redux/files-operations';
 import { getFiles } from '../../redux/selectors';
@@ -8,7 +8,7 @@ import css from './FileList.module.scss';
 const FileList = () => {
   const dispatch = useDispatch() as any;
   const files = useSelector(getFiles);
-  
+  const [openFileId, setOpenFileId] = useState<string | null>(null);
 
   useEffect(() => {
     dispatch(allFiles());
@@ -38,7 +38,8 @@ const FileList = () => {
               <ul className={css.cardList}>
                 {groupedFiles[date].map((file: any) => (
                   <li className={css.cardItem} key={file._id}>
-                    <File file={file} />
+                    <File file={file} openFileId={openFileId}
+                      setOpenFileId={setOpenFileId} />
                   </li>
                 ))}
               </ul>

@@ -8,18 +8,22 @@ import css from './File.module.scss';
 
 type FileProps = {
   file: FileTypes;
+  openFileId: string | null;
+  setOpenFileId: (id: string | null) => void;
 };
 
-const File = ({ file }: FileProps) => {
+const File = ({ file, openFileId, setOpenFileId }: FileProps) => {
   const [showInfo, setShowInfo] = useState(false);
-  const [downloadCount, setDownloadCount] = useState(
-    file.downloadCount || 0
-  );
+  const [downloadCount, setDownloadCount] = useState(file.downloadCount || 0);
 
   const dispatch = useDispatch() as any;
 
   const handleClick = () => {
-    setShowInfo(!showInfo);
+    if (openFileId === file._id) {
+      setOpenFileId(null);
+    } else {
+      setOpenFileId(file._id);
+    }
   };
 
   type FileInfoKeys =
@@ -43,28 +47,23 @@ const File = ({ file }: FileProps) => {
   };
 
   const handleOpenFile = async () => {
-    // Открыть файл
     window.open(file.url, '_blank');
 
-    // Обновить счетчик загрузок на клиенте
     setDownloadCount(prevCount => prevCount + 1);
 
-    // Отправить обновленный счетчик на сервер
-    await dispatch(
-      updateDownloadCount({ id: file._id, count: downloadCount })
-    );
+    await dispatch(updateDownloadCount({ id: file._id, count: downloadCount }));
   };
 
   return (
     <div
-      className={`${css.card} ${showInfo ? css.showInfo : ''}`}
+      className={`${css.card} ${openFileId === file._id ? css.showInfo : ''}`}
       onClick={handleClick}
     >
       <div className={css.iconWrapper}>
         <FiFileText size={56} />
       </div>
       <h3 className={css.cardTitle}>{file.name}</h3>
-      {showInfo && (
+      {openFileId === file._id && (
         <div className={css.cardInfo}>
           {Object.entries(fileInfo).map(([label, value]) => (
             <div className={css.infoItem} key={label}>
