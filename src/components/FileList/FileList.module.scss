@@ -1,9 +1,10 @@
-.cardList {
+.listContainer {
   background-color: #1b2041;
   border-radius: 32px;
-  margin: 0;
   padding: 24px;
-  list-style: none;
+}
+
+.cardList {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -11,4 +12,12 @@
 
 .cardItem {
   width: calc((100% - 36px) / 4);
+}
+
+.dateHeader {
+  font-size: 18px;
+  line-height: 30px;
+  color: #ffffffb2;
+  margin-bottom: 24px;
+  margin-top: 24px;
 }

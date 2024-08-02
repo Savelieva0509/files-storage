@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { UpdateDownloadCountPayload } from '../types';
 
 axios.defaults.baseURL = 'https://files-storage-backend.onrender.com';
 

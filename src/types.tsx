@@ -7,6 +7,7 @@ export interface FileTypes {
   extension: string;
   url: string;
   downloadCount: number;
+  createdAt: Date;
 }
 
 // Тип для состояния файлов

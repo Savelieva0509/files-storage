@@ -10,15 +10,18 @@ const initialState: FilesState = {
   files: [],
 };
 
-
 const filesSlice = createSlice({
   name: 'files',
   initialState: initialState,
   reducers: {},
   extraReducers: builder => {
     builder.addCase(allFiles.fulfilled, (state, action) => {
-      state.files = action.payload;
-      console.log('Files updated in state:', state.files); 
+      state.files = action.payload.sort((a:FileTypes, b:FileTypes) => {
+        const dateA = new Date(a.createdAt).getTime();
+        const dateB = new Date(b.createdAt).getTime();
+        return dateB - dateA;
+      });
+      console.log('Files updated in state:', state.files);
     });
     builder.addCase(allFiles.rejected, (state, action) => {
       console.error('Failed to fetch files:', action.error.message);
