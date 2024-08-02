@@ -13,7 +13,6 @@ type FileProps = {
 };
 
 const File = ({ file, openFileId, setOpenFileId }: FileProps) => {
-  const [showInfo, setShowInfo] = useState(false);
   const [downloadCount, setDownloadCount] = useState(file.downloadCount || 0);
 
   const dispatch = useDispatch() as any;

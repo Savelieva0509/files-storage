@@ -1,9 +1,8 @@
 import { forwardRef, useState, useRef, useImperativeHandle } from 'react';
 import { Form } from 'react-bootstrap';
-
 import { useDispatch } from 'react-redux';
 import { addFile } from '../../redux/files-operations';
-import { FileFormValues } from '../../types';
+
 
 const FileForm = forwardRef(
   ({ handleClose }: { handleClose: () => void }, ref) => {

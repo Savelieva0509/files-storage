@@ -11,9 +11,12 @@ export interface FileTypes {
 }
 
 // Тип для состояния файлов
-export interface FilesState {
+export interface FilesStateTypes {
   files: FileTypes[];
+  loading: boolean;
+  countFiles: number;
 }
+
 
 // Определение типа значений формы задачи
 export interface FileFormValues {

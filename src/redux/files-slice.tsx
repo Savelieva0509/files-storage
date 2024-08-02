@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { FileTypes } from '../types';
 import { allFiles, addFile } from './files-operations';
+import { FilesStateTypes } from '../types';
 
-export interface FilesState {
-  files: FileTypes[];
-}
-
-const initialState: FilesState = {
+const initialState: FilesStateTypes = {
   files: [],
+  countFiles: 0,
+  loading: false,
 };
 
 const filesSlice = createSlice({
@@ -15,8 +14,13 @@ const filesSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: builder => {
+    builder.addCase(allFiles.pending, state => {
+      state.loading = true;
+    });
     builder.addCase(allFiles.fulfilled, (state, action) => {
-      state.files = action.payload.sort((a:FileTypes, b:FileTypes) => {
+      state.loading = false;
+      state.countFiles = action.payload.countFiles;
+      state.files = action.payload.files.sort((a: FileTypes, b: FileTypes) => {
         const dateA = new Date(a.createdAt).getTime();
         const dateB = new Date(b.createdAt).getTime();
         return dateB - dateA;
@@ -24,7 +28,7 @@ const filesSlice = createSlice({
       console.log('Files updated in state:', state.files);
     });
     builder.addCase(allFiles.rejected, (state, action) => {
-      console.error('Failed to fetch files:', action.error.message);
+      state.loading = false;
     });
     builder.addCase(addFile.fulfilled, (state, action) => {
       state.files.unshift(action.payload);

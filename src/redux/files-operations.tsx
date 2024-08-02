@@ -5,12 +5,17 @@ axios.defaults.baseURL = 'https://files-storage-backend.onrender.com';
 
 export const allFiles = createAsyncThunk(
   'files/getFiles',
-  async (_, thunkAPI) => {
+  async (
+    { page = 1, limit = 10 }: { page: number; limit: number },
+    thunkAPI
+  ) => {
     try {
-      const response = await axios.get(`/api/files`);
+      const response = await axios.get(
+        `/api/files?page=${page}&limit=${limit}`
+      );
+      console.log(response.data, "From back");
       return response.data;
     } catch (error: any) {
-      console.error('Error fetching files:', error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
