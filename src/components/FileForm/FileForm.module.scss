@@ -1,21 +1,77 @@
-.formWrapper {
-  margin-bottom: 60px;
-}
-
 .fileForm {
-  //background-color: #1b2041;
+  background-color: #1b2041;
   border-radius: 12px;
   padding: 24px;
 }
 
-.fileFieldWrapper {
-  margin-bottom: 40px;
+.fileUploadWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background-color: #1b2041;
+  color: #ffffff;
+  position: relative;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  border-radius: 12px;
+  border: 1px solid #ffffff1a;
+  margin-bottom: 24px;
 }
 
-
-.field {
-   background-color: #1b2041;
+.fileUploadText {
+  font-size: 16px;
 }
+
+.fileInput {
+  display: none;
+}
+
+.customUploadBtn {
+  width: 193px;
+  color: #ff8c8c;
+  background: #0000001a;
+  padding: 11px 24px 11px 24px;
+  border-radius: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.fileNameWrapper,
+.fileTextWrapper {
+  width: 100%;
+}
+
+.fileNameWrapper {
+  margin-bottom: 12px;
+}
+
+.label {
+  font-size: 14px;
+  line-height: 20px;
+  color: #8d8fa0;
+  margin-bottom: 8px;
+}
+
+.textField,
+.nameField {
+  width: 100%;
+  border: 1px solid #ffffff1a;
+  background-color: transparent;
+  padding: 14px 12px;
+  color: #ffffff;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.textField::placeholder,
+.nameField::placeholder {
+  color: #ffffff;
+}
+
 
 .field:focus {
   outline-color: #1976d2;

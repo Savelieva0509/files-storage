@@ -7,6 +7,7 @@ import React, {
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, ErrorMessage, Field, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 import { addFile } from '../../redux/files-operations';
 import { getError } from '../../redux/selectors';
 import { FileFormValues } from '../../types';
@@ -29,8 +30,8 @@ const FileForm = forwardRef(
     const formRef = useRef<HTMLFormElement>(null);
     const dispatch = useDispatch() as any;
     const error = useSelector(getError);
-    interface MyFormikHelpers extends FormikHelpers<FileFormValues> {}
     const formikRef = useRef<any>(null);
+    const [file, setFile] = useState<File | null>(null);
 
     useImperativeHandle(ref, () => ({
       handleSubmit: () => {
@@ -64,9 +65,28 @@ const FileForm = forwardRef(
         shouldValidate?: boolean
       ) => void
     ) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        setFieldValue('file', file);
+      const selectedFile = event.target.files?.[0];
+      if (selectedFile) {
+        setFile(selectedFile);
+        setFieldValue('file', selectedFile);
+      }
+    };
+
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault(); 
+      event.stopPropagation();
+    };
+
+    const handleDrop = (
+      event: React.DragEvent<HTMLDivElement>,
+      setFieldValue: (field: string, value: any) => void
+    ) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const droppedFile = event.dataTransfer.files[0];
+      if (droppedFile) {
+        setFile(droppedFile);
+        setFieldValue('file', droppedFile); 
       }
     };
 
@@ -79,9 +99,33 @@ const FileForm = forwardRef(
       >
         {({ handleSubmit, setFieldValue, errors, touched }) => (
           <form ref={formRef} className={css.fileForm} onSubmit={handleSubmit}>
-            <div className={css.fileFieldWrapper}>
+            <div
+              className={css.fileUploadWrapper}
+              onDragOver={event => handleDragOver(event)}
+              onDrop={event => handleDrop(event, setFieldValue)}
+            >
+              <MdOutlineAddPhotoAlternate size={45} />
+              <p className={css.fileUploadText}>
+                Drag & drop files here or click to select
+              </p>
+              <input
+                id="fileInput"
+                type="file"
+                name="file"
+                onChange={event => handleFileChange(event, setFieldValue)}
+                className={css.fileInput}
+              />
+              <label htmlFor="fileInput" className={css.customUploadBtn}>
+                {file ? file.name : 'Choose file'}
+              </label>
+              <ErrorMessage name="file" component="div" className={css.error} />
+            </div>
+            <div className={css.fileNameWrapper}>
+              <label htmlFor="name" className={css.label}>
+                Title
+              </label>
               <Field
-                className={`${css.fileField} ${
+                className={`${css.nameField} ${
                   touched.name && errors.name ? css.error_fileField : ''
                 }`}
                 type="text"
@@ -91,11 +135,14 @@ const FileForm = forwardRef(
               <ErrorMessage name="name" component="div" className={css.error} />
             </div>
 
-            <div className={css.fileFieldWrapper}>
+            <div className={css.fileTextWrapper}>
+              <label htmlFor="description" className={css.label}>
+                Description
+              </label>
               <Field
                 placeholder="Enter file description..."
                 name="description"
-                className={`${css.fileField} ${
+                className={`${css.textField} ${
                   touched.description && errors.description
                     ? css.error_fileField
                     : ''
@@ -106,17 +153,6 @@ const FileForm = forwardRef(
                 component="div"
                 className={css.error}
               />
-            </div>
-            <div className={css.fileFieldWrapper}>
-              <input
-                type="file"
-                name="file"
-                onChange={event => handleFileChange(event, setFieldValue)}
-                className={`${css.fileField} ${
-                  touched.file && errors.file ? css.error_fileField : ''
-                }`}
-              />
-              <ErrorMessage name="file" component="div" className={css.error} />
             </div>
           </form>
         )}
