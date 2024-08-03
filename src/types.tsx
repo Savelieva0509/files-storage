@@ -22,7 +22,7 @@ export interface FilesStateTypes {
 export interface FileFormValues {
   name: string;
   description: string;
-  url: string;
+  file: File | null;
 }
 
 // Определение типа значений формы поиска

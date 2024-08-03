@@ -1,118 +1,126 @@
-import { forwardRef, useState, useRef, useImperativeHandle } from 'react';
-import { Form } from 'react-bootstrap';
+import React, {
+  forwardRef,
+  useState,
+  useRef,
+  useImperativeHandle,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Formik, ErrorMessage, Field, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
 import { addFile } from '../../redux/files-operations';
 import { getError } from '../../redux/selectors';
+import { FileFormValues } from '../../types';
+import css from './FileForm.module.scss';
+
+const initialValues: FileFormValues = {
+  name: '',
+  description: '',
+  file: null,
+};
+
+const FileSchema = Yup.object().shape({
+  name: Yup.string().required('Enter file name'),
+  description: Yup.string().required('Enter file description'),
+  file: Yup.mixed(),
+});
 
 const FileForm = forwardRef(
   ({ handleClose }: { handleClose: () => void }, ref) => {
-    const [validated, setValidated] = useState(false);
-    const [fileName, setFileName] = useState('');
-    const [fileDescription, setFileDescription] = useState('');
-    const [file, setFile] = useState<File | null>(null);
-
     const formRef = useRef<HTMLFormElement>(null);
     const dispatch = useDispatch() as any;
     const error = useSelector(getError);
+    interface MyFormikHelpers extends FormikHelpers<FileFormValues> {}
+    const formikRef = useRef<any>(null);
 
     useImperativeHandle(ref, () => ({
-      handleSubmit,
+      handleSubmit: () => {
+        formikRef.current?.submitForm();
+      },
     }));
 
-    const handleSubmit = (event?: React.FormEvent<HTMLFormElement>) => {
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+    const handleSubmit = (
+      values: FileFormValues,
+      formikHelpers: FormikHelpers<FileFormValues>
+    ) => {
+      if (values.file) {
+        const formData = new FormData();
+        formData.append('name', values.name);
+        formData.append('description', values.description);
+        formData.append('file', values.file);
 
-      const form = formRef.current;
-      if (form && form.checkValidity() === false) {
-        setValidated(true);
+        dispatch(addFile(formData));
+        formikHelpers.resetForm();
+        handleClose();
       } else {
-        setValidated(true);
-        if (file) {
-          const formData = new FormData();
-          formData.append('name', fileName);
-          formData.append('description', fileDescription);
-          formData.append('file', file);
-
-          dispatch(addFile(formData));
-          handleClose();
-        }
+        console.error('File is null');
       }
     };
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = (
+      event: React.ChangeEvent<HTMLInputElement>,
+      setFieldValue: (
+        field: string,
+        value: any,
+        shouldValidate?: boolean
+      ) => void
+    ) => {
       const file = event.target.files?.[0];
       if (file) {
-        setFile(file);
+        setFieldValue('file', file);
       }
     };
 
     return (
-      <Form
-        noValidate
-        validated={validated}
+      <Formik
+        initialValues={initialValues}
+        validationSchema={FileSchema}
         onSubmit={handleSubmit}
-        ref={formRef}
-        className="mb-4"
+        innerRef={formikRef}
       >
-        <Form.Group controlId="formTaskTitle" className="mb-3">
-          <Form.Control
-            required
-            type="text"
-            placeholder="Enter task title..."
-            minLength={5}
-            maxLength={50}
-            value={fileName}
-            onChange={e => setFileName(e.target.value)}
-            isInvalid={
-              validated && (fileName.length < 5 || fileName.length > 50)
-            }
-          />
-          <Form.Control.Feedback type="invalid">
-            Task title must be between 5 and 50 characters.
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group controlId="formTaskDescription" className="mb-3">
-          <Form.Control
-            as="textarea"
-            required
-            type="text"
-            placeholder="Enter task description..."
-            minLength={10}
-            maxLength={200}
-            value={fileDescription}
-            onChange={e => setFileDescription(e.target.value)}
-            isInvalid={
-              validated &&
-              (fileDescription.length < 10 || fileDescription.length > 200)
-            }
-          />
-          <Form.Control.Feedback type="invalid">
-            Task description must be between 10 and 200 characters.
-          </Form.Control.Feedback>
-        </Form.Group>
+        {({ handleSubmit, setFieldValue, errors, touched }) => (
+          <form ref={formRef} className={css.fileForm} onSubmit={handleSubmit}>
+            <div className={css.fileFieldWrapper}>
+              <Field
+                className={`${css.fileField} ${
+                  touched.name && errors.name ? css.error_fileField : ''
+                }`}
+                type="text"
+                placeholder="Enter file name..."
+                name="name"
+              />
+              <ErrorMessage name="name" component="div" className={css.error} />
+            </div>
 
-        <Form.Group controlId="formFile" className="mb-3">
-          <Form.Control
-            required
-            type="file"
-            onChange={handleFileChange}
-            isInvalid={
-              validated &&
-              !(
-                formRef.current?.elements.namedItem(
-                  'formFile'
-                ) as HTMLInputElement
-              )?.value
-            }
-          />
-          <Form.Control.Feedback type="invalid">
-            Please upload a file.
-          </Form.Control.Feedback>
-        </Form.Group>
-      </Form>
+            <div className={css.fileFieldWrapper}>
+              <Field
+                placeholder="Enter file description..."
+                name="description"
+                className={`${css.fileField} ${
+                  touched.description && errors.description
+                    ? css.error_fileField
+                    : ''
+                }`}
+              />
+              <ErrorMessage
+                name="description"
+                component="div"
+                className={css.error}
+              />
+            </div>
+            <div className={css.fileFieldWrapper}>
+              <input
+                type="file"
+                name="file"
+                onChange={event => handleFileChange(event, setFieldValue)}
+                className={`${css.fileField} ${
+                  touched.file && errors.file ? css.error_fileField : ''
+                }`}
+              />
+              <ErrorMessage name="file" component="div" className={css.error} />
+            </div>
+          </form>
+        )}
+      </Formik>
     );
   }
 );
