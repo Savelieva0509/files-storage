@@ -5,3 +5,8 @@ export const getFiles = (state: { files: FilesStateTypes }) =>
 
 export const getCountFiles = (state: { files: FilesStateTypes }) =>
   state.files.countFiles;
+
+  
+ export const getError = (state: { files: FilesStateTypes }) =>
+   state.files.error;
+ 

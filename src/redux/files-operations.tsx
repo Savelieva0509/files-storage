@@ -31,7 +31,7 @@ export const addFile = createAsyncThunk(
       });
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }
 );

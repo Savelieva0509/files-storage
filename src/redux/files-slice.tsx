@@ -7,6 +7,7 @@ const initialState: FilesStateTypes = {
   files: [],
   countFiles: 0,
   loading: false,
+  error: null,
 };
 
 const filesSlice = createSlice({
@@ -30,9 +31,20 @@ const filesSlice = createSlice({
     builder.addCase(allFiles.rejected, (state, action) => {
       state.loading = false;
     });
-    builder.addCase(addFile.fulfilled, (state, action) => {
-      state.files.unshift(action.payload);
-    });
+    builder
+      .addCase(addFile.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addFile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.files.unshift(action.payload);
+        state.error = null;
+      })
+      .addCase(addFile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 

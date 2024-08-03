@@ -1,8 +1,8 @@
 import { forwardRef, useState, useRef, useImperativeHandle } from 'react';
 import { Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addFile } from '../../redux/files-operations';
-
+import { getError } from '../../redux/selectors';
 
 const FileForm = forwardRef(
   ({ handleClose }: { handleClose: () => void }, ref) => {
@@ -10,10 +10,10 @@ const FileForm = forwardRef(
     const [fileName, setFileName] = useState('');
     const [fileDescription, setFileDescription] = useState('');
     const [file, setFile] = useState<File | null>(null);
-    const formRef = useRef<HTMLFormElement>(null);
 
+    const formRef = useRef<HTMLFormElement>(null);
     const dispatch = useDispatch() as any;
-    
+    const error = useSelector(getError);
 
     useImperativeHandle(ref, () => ({
       handleSubmit,
@@ -35,7 +35,7 @@ const FileForm = forwardRef(
           formData.append('name', fileName);
           formData.append('description', fileDescription);
           formData.append('file', file);
-       
+
           dispatch(addFile(formData));
           handleClose();
         }
@@ -74,7 +74,6 @@ const FileForm = forwardRef(
             Task title must be between 5 and 50 characters.
           </Form.Control.Feedback>
         </Form.Group>
-
         <Form.Group controlId="formTaskDescription" className="mb-3">
           <Form.Control
             as="textarea"

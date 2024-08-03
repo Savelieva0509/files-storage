@@ -15,8 +15,8 @@ export interface FilesStateTypes {
   files: FileTypes[];
   loading: boolean;
   countFiles: number;
+  error: string | null;
 }
-
 
 // Определение типа значений формы задачи
 export interface FileFormValues {
