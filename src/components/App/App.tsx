@@ -1,12 +1,11 @@
 import FileList from '../FileList/FileList';
-import Modal from '../Modal/Modal';
-
-import css from'./App.module.scss';
+import AppBar from '../AppBar/AppBar';
+import css from './App.module.scss';
 
 function App() {
   return (
-    <div className={css.container}>
-      <Modal />
+    <div className={css.appContainer}>
+      <AppBar />
       <FileList />
     </div>
   );
