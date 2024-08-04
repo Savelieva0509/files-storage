@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import FileForm from '../FileForm/FileForm';
 import { IoClose } from 'react-icons/io5';
+import { FaPlus } from 'react-icons/fa6';
 import ButtonPrimary from '../ButtonPrimary/ButtonPrimary';
 import ButtonSecondary from '../ButtonSecondary/ButtonSecondary';
 import css from './Modal.module.scss';
@@ -15,7 +16,7 @@ const Modal = () => {
   return (
     <>
       <button className={css.openModalButton} onClick={handleShow}>
-        + ADD NEW TASK
+        <FaPlus />
       </button>
 
       {show && (
@@ -28,11 +29,7 @@ const Modal = () => {
               </button>
             </div>
             <div className={css.modalBody}>
-              <FileForm
-                ref={formRef}
-                handleClose={handleClose}
-                
-              />
+              <FileForm ref={formRef} handleClose={handleClose} />
             </div>
             <div className={css.modalFooter}>
               <ButtonSecondary
