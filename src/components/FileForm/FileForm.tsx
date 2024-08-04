@@ -3,6 +3,7 @@ import React, {
   useState,
   useRef,
   useImperativeHandle,
+  useEffect,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, ErrorMessage, Field, FormikHelpers } from 'formik';
@@ -22,11 +23,20 @@ const initialValues: FileFormValues = {
 const FileSchema = Yup.object().shape({
   name: Yup.string().required('Enter file name'),
   description: Yup.string().required('Enter file description'),
-  file: Yup.mixed(),
+  file: Yup.mixed().required('Upload file'),
 });
 
 const FileForm = forwardRef(
-  ({ handleClose }: { handleClose: () => void }, ref) => {
+  (
+    {
+      handleClose,
+      setFileError,
+    }: {
+      handleClose: () => void;
+      setFileError: (error: string | null) => void;
+    },
+    ref
+  ) => {
     const formRef = useRef<HTMLFormElement>(null);
     const dispatch = useDispatch() as any;
     const error = useSelector(getError);
@@ -73,7 +83,7 @@ const FileForm = forwardRef(
     };
 
     const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-      event.preventDefault(); 
+      event.preventDefault();
       event.stopPropagation();
     };
 
@@ -86,7 +96,7 @@ const FileForm = forwardRef(
       const droppedFile = event.dataTransfer.files[0];
       if (droppedFile) {
         setFile(droppedFile);
-        setFieldValue('file', droppedFile); 
+        setFieldValue('file', droppedFile);
       }
     };
 
@@ -118,6 +128,7 @@ const FileForm = forwardRef(
               <label htmlFor="fileInput" className={css.customUploadBtn}>
                 {file ? file.name : 'Choose file'}
               </label>
+              <p className={css.error}>{error}</p>
               <ErrorMessage name="file" component="div" className={css.error} />
             </div>
             <div className={css.fileNameWrapper}>

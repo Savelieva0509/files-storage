@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FiFileText } from 'react-icons/fi';
 import { FileTypes } from '../../types';
-import Button from '../Button/Button';
 import { updateDownloadCount } from '../../redux/files-operations';
 import css from './File.module.scss';
+import ButtonPrimary from '../ButtonPrimary/ButtonPrimary';
 
 type FileProps = {
   file: FileTypes;
@@ -64,15 +64,17 @@ const File = ({ file, openFileId, setOpenFileId }: FileProps) => {
       <h3 className={css.cardTitle}>{file.name}</h3>
       {openFileId === file._id && (
         <div className={css.cardInfo}>
-          {Object.entries(fileInfo).map(([label, value]) => (
-            <div className={css.infoItem} key={label}>
-              <p className={css.label}>{label}</p>
-              <p className={css.value}>{value}</p>
-            </div>
-          ))}
-          <Button type="button" onClick={handleOpenFile}>
+          <div className={css.cardInfoList}>
+            {Object.entries(fileInfo).map(([label, value]) => (
+              <div className={css.infoItem} key={label}>
+                <p className={css.label}>{label}</p>
+                <p className={css.value}>{value}</p>
+              </div>
+            ))}
+          </div>
+          <ButtonPrimary type="button" onClick={handleOpenFile} width="100%">
             Open
-          </Button>
+          </ButtonPrimary>
         </div>
       )}
     </div>

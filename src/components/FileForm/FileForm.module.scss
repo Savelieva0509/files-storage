@@ -1,5 +1,5 @@
 .fileForm {
-  background-color: #1b2041;
+  background-color: #181d3b;
   border-radius: 12px;
   padding: 24px;
 }
@@ -10,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  background-color: #1b2041;
+  background-color: #181d3b;
   color: #ffffff;
   position: relative;
   padding-top: 80px;
@@ -72,15 +72,14 @@
   color: #ffffff;
 }
 
-
 .field:focus {
   outline-color: #1976d2;
 }
 
 .error {
-  color: red;
+  color: #ff8c8c;
 }
 
-.error_field {
-  border: 1px solid red;
+.error_fileField {
+  border: 1px solid #ff8c8c;
 }
