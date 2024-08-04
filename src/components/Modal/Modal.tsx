@@ -7,7 +7,6 @@ import css from './Modal.module.scss';
 
 const Modal = () => {
   const [show, setShow] = useState(false);
-  const [fileError, setFileError] = useState<null | string>(null);
   const formRef = useRef<{ handleSubmit: () => void }>(null);
 
   const handleClose = () => setShow(false);
@@ -32,7 +31,7 @@ const Modal = () => {
               <FileForm
                 ref={formRef}
                 handleClose={handleClose}
-                setFileError={setFileError}
+                
               />
             </div>
             <div className={css.modalFooter}>

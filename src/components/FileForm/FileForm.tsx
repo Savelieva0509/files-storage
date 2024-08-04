@@ -30,10 +30,8 @@ const FileForm = forwardRef(
   (
     {
       handleClose,
-      setFileError,
     }: {
       handleClose: () => void;
-      setFileError: (error: string | null) => void;
     },
     ref
   ) => {
@@ -41,6 +39,7 @@ const FileForm = forwardRef(
     const dispatch = useDispatch() as any;
     const error = useSelector(getError);
     const formikRef = useRef<any>(null);
+    const [fileError, setFileError] = useState<null | string>(null);
     const [file, setFile] = useState<File | null>(null);
 
     useImperativeHandle(ref, () => ({
@@ -48,6 +47,10 @@ const FileForm = forwardRef(
         formikRef.current?.submitForm();
       },
     }));
+
+    useEffect(() => {
+      setFileError(null);
+    }, [setFileError]);
 
     const handleSubmit = (
       values: FileFormValues,
@@ -128,7 +131,7 @@ const FileForm = forwardRef(
               <label htmlFor="fileInput" className={css.customUploadBtn}>
                 {file ? file.name : 'Choose file'}
               </label>
-              <p className={css.error}>{error}</p>
+              <p className={css.error}>{fileError}</p>
               <ErrorMessage name="file" component="div" className={css.error} />
             </div>
             <div className={css.fileNameWrapper}>
