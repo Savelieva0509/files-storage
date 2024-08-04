@@ -9,22 +9,15 @@ import css from './FileList.module.scss';
 const FileList = () => {
   const dispatch = useDispatch() as any;
   const files = useSelector(getFiles);
-  const countFiles = useSelector(getCountFiles)
+  const countFiles = useSelector(getCountFiles);
   const [openFileId, setOpenFileId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
   useEffect(() => {
-    console.log(
-      'Dispatching allFiles with page:',
-      currentPage,
-      'and limit:',
-      itemsPerPage
-    );
     dispatch(allFiles({ page: currentPage, limit: itemsPerPage }));
   }, [dispatch, currentPage]);
 
-  // Group files by date
   const groupedFiles = useMemo(() => {
     const grouped = files.reduce((groups: any, file: any) => {
       const date = new Date(file.createdAt).toLocaleDateString();
@@ -34,15 +27,11 @@ const FileList = () => {
       groups[date].push(file);
       return groups;
     }, {});
-    console.log('Grouped Files:', grouped);
+   
     return grouped;
   }, [files]);
 
-  // Calculate total pages
-
-  const totalPages = Math.ceil(countFiles/ itemsPerPage);
-  console.log('Total Files:', countFiles);
-  console.log('Total Pages:', totalPages);
+  const totalPages = Math.ceil(countFiles / itemsPerPage);
 
   return (
     <>

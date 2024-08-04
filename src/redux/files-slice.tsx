@@ -26,7 +26,6 @@ const filesSlice = createSlice({
         const dateB = new Date(b.createdAt).getTime();
         return dateB - dateA;
       });
-      console.log('Files updated in state:', state.files);
     });
     builder.addCase(allFiles.rejected, (state, action) => {
       state.loading = false;

@@ -13,7 +13,7 @@ export const allFiles = createAsyncThunk(
       const response = await axios.get(
         `/api/files?page=${page}&limit=${limit}`
       );
-      console.log(response.data, "From back");
+
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -31,6 +31,7 @@ export const addFile = createAsyncThunk(
       });
       return response.data;
     } catch (error: any) {
+      console.log(error.response.data.message);
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }
