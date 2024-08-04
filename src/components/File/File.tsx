@@ -61,7 +61,7 @@ const File = ({ file, openFileId, setOpenFileId }: FileProps) => {
       <div className={css.iconWrapper}>
         <FiFileText size={56} />
       </div>
-      <h3 className={css.cardTitle}>{file.name}</h3>
+      <p className={css.cardTitle}>{file.name}</p>
       {openFileId === file._id && (
         <div className={css.cardInfo}>
           <div className={css.cardInfoList}>

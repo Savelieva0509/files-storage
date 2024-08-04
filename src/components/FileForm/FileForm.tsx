@@ -135,7 +135,7 @@ const FileForm = forwardRef(
               <ErrorMessage name="file" component="div" className={css.error} />
             </div>
             <div className={css.fileNameWrapper}>
-              <label htmlFor="name" className={css.label}>
+              <label htmlFor="name" className={css.fileLabel}>
                 Title
               </label>
               <Field
@@ -150,7 +150,7 @@ const FileForm = forwardRef(
             </div>
 
             <div className={css.fileTextWrapper}>
-              <label htmlFor="description" className={css.label}>
+              <label htmlFor="description" className={css.fileLabel}>
                 Description
               </label>
               <Field

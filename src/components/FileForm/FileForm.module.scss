@@ -42,18 +42,18 @@
 
 .fileNameWrapper,
 .fileTextWrapper {
-  width: 100%;
+  
 }
 
 .fileNameWrapper {
   margin-bottom: 12px;
 }
 
-.label {
+.fileLabel {
   font-size: 14px;
   line-height: 20px;
   color: #8d8fa0;
-  margin-bottom: 8px;
+  
 }
 
 .textField,
@@ -65,6 +65,8 @@
   color: #ffffff;
   font-size: 14px;
   border-radius: 8px;
+  box-sizing: border-box; 
+  margin-top: 8px;
 }
 
 .textField::placeholder,
@@ -83,4 +85,9 @@
 
 .error_fileField {
   border: 1px solid #ff8c8c;
+}
+
+.error {
+  margin-top: 10px;
+  color: #ff8c8c;
 }
