@@ -1,26 +1,84 @@
-.form {
+.searchForm {
   display: flex;
-  gap: 10px;
-  margin-bottom: 50px;
+  justify-content: space-between;
+  background-color: #1b2041;
+  width: 1248px;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 40px;
 }
 
-.fieldWrapper {
-  text-align: start;
-}
-.field {
-  padding: 8px;
-  font: inherit;
-  border-radius: 8px;
-}
-
-.field:focus {
-  outline-color: #1976d2;
+.searchInput {
+  background-color: #181c35;
+  width: 100%;
+  padding: 12px;
+  border-radius: 40px;
+  border: transparent;
+  border-radius: 29px;
 }
 
-.error {
-  color: red;
+.searchInput::placeholder {
+  color: #ffffff;
+}
+.searchInput:focus {
+  outline-color: #ffffff;
 }
 
-.error_field {
-  border: 1px solid red;
+.searchButton {
+  position: relative;
+  width: 173px;
+  padding: 11px;
+  border: 1px solid #ff8c8c;
+  color: #ff8c8c;
+  border-radius: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  background-color: #0000001a;
+  transition: color 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    background-color: #ff8c8c33;
+  }
+
+  &:active {
+    color: #ffffff;
+  }
+
+  &:active::before {
+    transform: scale(2);
+    background-color: #ff8c8c;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    background: #ff8c8c;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    transform: scale(0);
+    transform-origin: center;
+    z-index: 0;
+    pointer-events: none;
+    mix-blend-mode: normal; 
+  }
+
+  span {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.error__fileField {
+  color: #ff8c8c;
+}
+
+.error_fileField {
+  border: 1px solid #ff8c8c;
 }

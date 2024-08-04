@@ -27,6 +27,5 @@ export interface FileFormValues {
 
 // Определение типа значений формы поиска
 export interface SearchFormValues {
-  id: string;
+  query: string;
 }
-
