@@ -1,9 +1,9 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Pagination from 'react-bootstrap/Pagination';
 import { allFiles } from '../../redux/files-operations';
 import { getFiles, getCountFiles, getSearchQuery } from '../../redux/selectors';
 import File from '../File/File';
+import Pagination from '../Pagination/Pagination';
 import css from './FileList.module.scss';
 
 const FileList = () => {
@@ -40,7 +40,7 @@ const FileList = () => {
     return grouped;
   }, [filteredFiles]);
 
-  const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
+  const totalPages = Math.ceil(countFiles / itemsPerPage);
 
   return (
     <>
@@ -62,40 +62,14 @@ const FileList = () => {
               </ul>
             </div>
           ))}
-          <Pagination>
-            <Pagination.First
-              onClick={() => setCurrentPage(1)}
-              disabled={currentPage === 1}
-            />
-            <Pagination.Prev
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-            />
-            {[...Array(totalPages)].map((_, index) => (
-              <Pagination.Item
-                key={index + 1}
-                active={index + 1 === currentPage}
-                onClick={() => setCurrentPage(index + 1)}
-              >
-                {index + 1}
-              </Pagination.Item>
-            ))}
-            <Pagination.Next
-              onClick={() =>
-                setCurrentPage(prev => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-            />
-            <Pagination.Last
-              onClick={() => setCurrentPage(totalPages)}
-              disabled={currentPage === totalPages}
-            />
-          </Pagination>
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
         </div>
       ) : (
-        <div className={css.noResultsWpapper}>
-          <p className={css.noResults}>No files found</p>
-        </div>
+        <p className={css.noResults}>No files found</p>
       )}
     </>
   );

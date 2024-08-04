@@ -29,3 +29,4 @@ export interface FileFormValues {
 export interface SearchFormValues {
   query: string;
 }
+

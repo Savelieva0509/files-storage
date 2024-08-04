@@ -6,7 +6,7 @@ const AppBar = () => {
   return (
     <div className={css.appBar}>
       <SearchForm />
-      <Modal/>
+      <Modal />
     </div>
   );
 };
