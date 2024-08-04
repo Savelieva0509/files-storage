@@ -72,11 +72,12 @@
   color: #ffffff;
 }
 
-.field:focus {
-  outline-color: #1976d2;
+.textField:focus,
+.nameField:focus {
+  outline-color: #ffffff;
 }
 
-.error {
+.error__fileField {
   color: #ff8c8c;
 }
 
