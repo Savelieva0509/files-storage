@@ -18,6 +18,6 @@ Files Storage is a web application for organizing and uploading files.
 ## Technologies Used
 
 - **Frontend:** TypeScript, React.js, Redux, Formik, Yup
-- **Backend:** Node.js, Express.js, MongoDB, 
+- **Backend:** Node.js, Express.js, MongoDB, Supabase storage
 
 
