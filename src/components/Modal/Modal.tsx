@@ -1,17 +1,35 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import FileForm from '../FileForm/FileForm';
 import { IoClose } from 'react-icons/io5';
 import { FaPlus } from 'react-icons/fa6';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ButtonPrimary from '../ButtonPrimary/ButtonPrimary';
 import ButtonSecondary from '../ButtonSecondary/ButtonSecondary';
 import css from './Modal.module.scss';
 
 const Modal = () => {
   const [show, setShow] = useState(false);
+  const [fileError, setFileError] = useState<string | null>(null);
   const formRef = useRef<{ handleSubmit: () => void }>(null);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = (() => {
+    setShow(false);
+    setFileError(null);
+  });
+
+  const handleShow =(() => setShow(true));
+  const handleAddClick = (() => {
+    if (formRef.current) {
+      formRef.current.handleSubmit();
+    }
+  });
+
+  useEffect(() => {
+    if (fileError) {
+      toast.error(fileError);
+    }
+  }, [fileError]);
 
   return (
     <>
@@ -29,7 +47,11 @@ const Modal = () => {
               </button>
             </div>
             <div className={css.modalBody}>
-              <FileForm ref={formRef} handleClose={handleClose} />
+              <FileForm
+                ref={formRef}
+                handleClose={handleClose}
+                setFileError={setFileError}
+              />
             </div>
             <div className={css.modalFooter}>
               <ButtonSecondary
@@ -40,11 +62,9 @@ const Modal = () => {
                 Cancel
               </ButtonSecondary>
               <ButtonPrimary
-                type="button"
+                type="submit"
                 width="193px"
-                onClick={() =>
-                  formRef.current && formRef.current.handleSubmit()
-                }
+                onClick={handleAddClick}
               >
                 Add
               </ButtonPrimary>
@@ -52,6 +72,7 @@ const Modal = () => {
           </div>
         </div>
       )}
+      <ToastContainer />
     </>
   );
 };

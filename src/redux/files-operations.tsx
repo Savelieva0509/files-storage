@@ -37,6 +37,16 @@ export const addFile = createAsyncThunk(
   }
 );
 
+export const addFileWithPromise =
+  (formData: FormData) => async (dispatch: any) => {
+    const resultAction = await dispatch(addFile(formData));
+    if (addFile.fulfilled.match(resultAction)) {
+      return { success: true, data: resultAction.payload };
+    } else {
+      return { success: false, error: resultAction.payload };
+    }
+  };
+
 export const updateDownloadCount = createAsyncThunk(
   'files/updateDownloadCount',
   async ({ id, count }: { id: string; count: number }, thunkAPI) => {

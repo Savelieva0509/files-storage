@@ -5,12 +5,12 @@ import React, {
   useImperativeHandle,
   useEffect,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik, ErrorMessage, Field, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
-import { addFile } from '../../redux/files-operations';
-import { getError } from '../../redux/selectors';
+import 'react-toastify/dist/ReactToastify.css';
+import { addFileWithPromise } from '../../redux/files-operations';
 import { FileFormValues } from '../../types';
 import css from './FileForm.module.scss';
 
@@ -30,16 +30,17 @@ const FileForm = forwardRef(
   (
     {
       handleClose,
+      setFileError,
     }: {
       handleClose: () => void;
+      setFileError: (error: string | null) => void;
     },
     ref
   ) => {
     const formRef = useRef<HTMLFormElement>(null);
     const dispatch = useDispatch() as any;
-    const error = useSelector(getError);
+    
     const formikRef = useRef<any>(null);
-    const [fileError, setFileError] = useState<null | string>(null);
     const [file, setFile] = useState<File | null>(null);
 
     useImperativeHandle(ref, () => ({
@@ -52,7 +53,7 @@ const FileForm = forwardRef(
       setFileError(null);
     }, [setFileError]);
 
-    const handleSubmit = (
+    const handleSubmit = async (
       values: FileFormValues,
       formikHelpers: FormikHelpers<FileFormValues>
     ) => {
@@ -62,9 +63,13 @@ const FileForm = forwardRef(
         formData.append('description', values.description);
         formData.append('file', values.file);
 
-        dispatch(addFile(formData));
-        formikHelpers.resetForm();
-        handleClose();
+        const result = await dispatch(addFileWithPromise(formData));
+        if (result.success) {
+          formikHelpers.resetForm();
+          handleClose();
+        } else {
+          setFileError(result.error);
+        }
       } else {
         console.error('File is null');
       }
@@ -104,73 +109,88 @@ const FileForm = forwardRef(
     };
 
     return (
-      <Formik
-        initialValues={initialValues}
-        validationSchema={FileSchema}
-        onSubmit={handleSubmit}
-        innerRef={formikRef}
-      >
-        {({ handleSubmit, setFieldValue, errors, touched }) => (
-          <form ref={formRef} className={css.fileForm} onSubmit={handleSubmit}>
-            <div
-              className={css.fileUploadWrapper}
-              onDragOver={event => handleDragOver(event)}
-              onDrop={event => handleDrop(event, setFieldValue)}
+      <>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={FileSchema}
+          onSubmit={handleSubmit}
+          innerRef={formikRef}
+        >
+          {({ handleSubmit, setFieldValue, errors, touched }) => (
+            <form
+              ref={formRef}
+              className={css.fileForm}
+              onSubmit={handleSubmit}
             >
-              <MdOutlineAddPhotoAlternate size={45} />
-              <p className={css.fileUploadText}>
-                Drag & drop files here or click to select
-              </p>
-              <input
-                id="fileInput"
-                type="file"
-                name="file"
-                onChange={event => handleFileChange(event, setFieldValue)}
-                className={css.fileInput}
-              />
-              <label htmlFor="fileInput" className={css.customUploadBtn}>
-                {file ? file.name : 'Choose file'}
-              </label>
-              <p className={css.error}>{fileError}</p>
-              <ErrorMessage name="file" component="div" className={css.error} />
-            </div>
-            <div className={css.fileNameWrapper}>
-              <label htmlFor="name" className={css.fileLabel}>
-                Title
-              </label>
-              <Field
-                className={`${css.nameField} ${
-                  touched.name && errors.name ? css.error_fileField : ''
-                }`}
-                type="text"
-                placeholder="Enter file name..."
-                name="name"
-              />
-              <ErrorMessage name="name" component="div" className={css.error} />
-            </div>
+              <div
+                className={css.fileUploadWrapper}
+                onDragOver={event => handleDragOver(event)}
+                onDrop={event => handleDrop(event, setFieldValue)}
+              >
+                <MdOutlineAddPhotoAlternate size={45} />
+                <p className={css.fileUploadText}>
+                  Drag & drop files here or click to select
+                </p>
+                <input
+                  id="fileInput"
+                  type="file"
+                  name="file"
+                  onChange={event => handleFileChange(event, setFieldValue)}
+                  className={css.fileInput}
+                />
+                <label htmlFor="fileInput" className={css.customUploadBtn}>
+                  {file ? file.name : 'Choose file'}
+                </label>
+                {/* {error && <p className={css.error}>{error}</p>} */}
+                <ErrorMessage
+                  name="file"
+                  component="div"
+                  className={css.error}
+                />
+              </div>
+              <div className={css.fileNameWrapper}>
+                <label htmlFor="name" className={css.fileLabel}>
+                  Title
+                </label>
+                <Field
+                  className={`${css.nameField} ${
+                    touched.name && errors.name ? css.error_fileField : ''
+                  }`}
+                  type="text"
+                  placeholder="Enter file name..."
+                  name="name"
+                />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  className={css.error}
+                />
+              </div>
 
-            <div className={css.fileTextWrapper}>
-              <label htmlFor="description" className={css.fileLabel}>
-                Description
-              </label>
-              <Field
-                placeholder="Enter file description..."
-                name="description"
-                className={`${css.textField} ${
-                  touched.description && errors.description
-                    ? css.error_fileField
-                    : ''
-                }`}
-              />
-              <ErrorMessage
-                name="description"
-                component="div"
-                className={css.error}
-              />
-            </div>
-          </form>
-        )}
-      </Formik>
+              <div className={css.fileTextWrapper}>
+                <label htmlFor="description" className={css.fileLabel}>
+                  Description
+                </label>
+                <Field
+                  placeholder="Enter file description..."
+                  name="description"
+                  className={`${css.textField} ${
+                    touched.description && errors.description
+                      ? css.error_fileField
+                      : ''
+                  }`}
+                />
+                <ErrorMessage
+                  name="description"
+                  component="div"
+                  className={css.error}
+                />
+              </div>
+              <></>
+            </form>
+          )}
+        </Formik>
+      </>
     );
   }
 );
