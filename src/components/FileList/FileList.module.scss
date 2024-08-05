@@ -31,6 +31,10 @@
   margin-bottom: 20px;
 }
 
-.paginationWrapper{
-  margin-top: 320px;
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #ff8c8c; 
 }

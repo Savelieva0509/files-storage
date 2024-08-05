@@ -8,3 +8,6 @@ export const getCountFiles = (state: { files: FilesStateTypes }) =>
 
 export const getSearchQuery = (state: { search: SearchFormValues }) =>
   state.search.query;
+
+export const getLoading = (state: { files: FilesStateTypes }) =>
+  state.files.loading;
