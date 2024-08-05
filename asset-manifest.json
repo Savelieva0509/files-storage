@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/files-storage/static/css/main.cfe62d2a.css",
+    "main.js": "/files-storage/static/js/main.5645a2ef.js",
+    "static/media/sofia-pro-regular.otf": "/files-storage/static/media/sofia-pro-regular.d36998f5d9772461be21.otf",
+    "index.html": "/files-storage/index.html",
+    "main.cfe62d2a.css.map": "/files-storage/static/css/main.cfe62d2a.css.map",
+    "main.5645a2ef.js.map": "/files-storage/static/js/main.5645a2ef.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cfe62d2a.css",
+    "static/js/main.5645a2ef.js"
+  ]
+}
