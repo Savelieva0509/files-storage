@@ -17,8 +17,14 @@ jobs:
           npm run lint:js
           npm run build
 
+      - name: Clean up temporary files
+        run: git worktree prune
+
+      - name: List temp deployment folder
+        run: ls -la github-pages-deploy-action-temp-deployment-folder
+
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.0
+        uses: JamesIves/github-pages-deploy-action@4.3.0
         with:
           branch: gh-pages
           folder: build
