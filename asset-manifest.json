@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/files-storage/static/css/main.db1149be.css",
-    "main.js": "/files-storage/static/js/main.5645a2ef.js",
+    "main.css": "/files-storage/static/css/main.0187aa3b.css",
+    "main.js": "/files-storage/static/js/main.3078a527.js",
     "static/media/sofia-pro-regular.otf": "/files-storage/static/media/sofia-pro-regular.d36998f5d9772461be21.otf",
     "index.html": "/files-storage/index.html",
-    "main.db1149be.css.map": "/files-storage/static/css/main.db1149be.css.map",
-    "main.5645a2ef.js.map": "/files-storage/static/js/main.5645a2ef.js.map"
+    "main.0187aa3b.css.map": "/files-storage/static/css/main.0187aa3b.css.map",
+    "main.3078a527.js.map": "/files-storage/static/js/main.3078a527.js.map"
   },
   "entrypoints": [
-    "static/css/main.db1149be.css",
-    "static/js/main.5645a2ef.js"
+    "static/css/main.0187aa3b.css",
+    "static/js/main.3078a527.js"
   ]
 }
