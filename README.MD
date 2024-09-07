@@ -11,7 +11,7 @@ Files Storage is a web application for organizing and uploading files.
 - **Upload files:** Users can upload files and view information about existing files.
 - **Size:** The upload functionality supports files ranging from 1KB to 7GB.
 - **Reload error:** Users cannot upload duplicate files.
-- **Search :** User can search the file by name.
+- **Search :** User can search the file (used full text search in title and description).
 - **Download counter:** Each file includes information about the number of downloads.
 
 
