@@ -1,18 +1,29 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSearchQuery } from '../../redux/search-slice';
+import { allFiles } from '../../redux/files-operations';
 import css from './SearchForm.module.scss';
 
-const SearchForm = () => {
-  const dispatch = useDispatch();
-  const [query, setQuery] = useState('');
+interface SearchFormState {
+  query: string;
+}
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
+const SearchForm = () => {
+  const [searchForm, setSearchForm] = useState<SearchFormState>({ query: '' });
+  const dispatch = useDispatch() as any;
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newQuery = event.target.value;
+    setSearchForm({ query: newQuery });
+    if (newQuery === '') {
+      dispatch(allFiles({ page: 1, limit: 10 }));
+      dispatch(setSearchQuery(''));
+    }
   };
 
-  const handleSearch = () => {
-    dispatch(setSearchQuery(query));
+  const handleSearch = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    dispatch(setSearchQuery(searchForm.query));
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,7 +49,7 @@ const SearchForm = () => {
       <input
         type="text"
         placeholder="Search for"
-        value={query}
+        value={searchForm.query}
         onChange={handleChange}
         className={css.searchInput}
       />

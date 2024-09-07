@@ -7,7 +7,7 @@ const initialState: SearchFormValues = {
 
 const searchSlice = createSlice({
   name: 'search',
-  initialState,
+  initialState: initialState,
   reducers: {
     setSearchQuery(state, action: PayloadAction<string>) {
       state.query = action.payload;

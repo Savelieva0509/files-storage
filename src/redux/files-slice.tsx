@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { FileTypes } from '../types';
-import { allFiles, addFile } from './files-operations';
+import { allFiles, addFile, searchFiles } from './files-operations';
 import { FilesStateTypes } from '../types';
 
 const initialState: FilesStateTypes = {
@@ -29,7 +29,9 @@ const filesSlice = createSlice({
     });
     builder.addCase(allFiles.rejected, (state, action) => {
       state.loading = false;
+      state.error = action.payload as string;
     });
+
     builder
       .addCase(addFile.pending, state => {
         state.loading = true;
@@ -41,6 +43,26 @@ const filesSlice = createSlice({
         state.error = null;
       })
       .addCase(addFile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
+
+    builder
+      .addCase(searchFiles.pending, state => {
+        state.loading = true;
+      })
+      .addCase(searchFiles.fulfilled, (state, action) => {
+        state.loading = false;
+        state.countFiles = action.payload.countFiles;
+        state.files = action.payload.files.sort(
+          (a: FileTypes, b: FileTypes) => {
+            const dateA = new Date(a.createdAt).getTime();
+            const dateB = new Date(b.createdAt).getTime();
+            return dateB - dateA;
+          }
+        );
+      })
+      .addCase(searchFiles.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

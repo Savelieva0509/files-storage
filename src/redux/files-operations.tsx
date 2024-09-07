@@ -20,6 +20,7 @@ export const allFiles = createAsyncThunk(
     }
   }
 );
+
 export const addFile = createAsyncThunk(
   'files/addFile',
   async (formData: FormData, thunkAPI) => {
@@ -58,5 +59,23 @@ export const updateDownloadCount = createAsyncThunk(
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
+  }
+);
+
+export const searchFiles = createAsyncThunk(
+  'files/searchFiles',
+  async ({
+    query,
+    page,
+    limit,
+  }: {
+    query: string;
+    page: number;
+    limit: number;
+  }) => {
+    const response = await axios.get(`/api/files/search`, {
+      params: { query, page, limit },
+    });
+    return response.data;
   }
 );

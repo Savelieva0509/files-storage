@@ -1,9 +1,14 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
-import { useNavigate } from 'react-router-dom'; 
-import { allFiles } from '../../redux/files-operations';
-import { getFiles, getCountFiles, getSearchQuery,getLoading } from '../../redux/selectors';
+import { useNavigate } from 'react-router-dom';
+import { searchFiles, allFiles } from '../../redux/files-operations';
+import {
+  getFiles,
+  getCountFiles,
+  getSearchQuery,
+  getLoading,
+} from '../../redux/selectors';
 import File from '../File/File';
 import Pagination from '../Pagination/Pagination';
 import css from './FileList.module.scss';
@@ -20,24 +25,23 @@ const FileList = () => {
 
   const navigate = useNavigate();
 
-   useEffect(() => {
+  useEffect(() => {
     navigate(`?page=${currentPage}`, { replace: true });
   }, [currentPage, navigate]);
 
   useEffect(() => {
-    dispatch(allFiles({ page: currentPage, limit: itemsPerPage }));
-  }, [dispatch, currentPage]);
-
-  const filteredFiles = useMemo(() => {
-    if (!query) return files;
-
-    return files.filter(file =>
-      file.name.toLowerCase().includes(query.toLowerCase())
-    );
-  }, [files, query]);
+    if (query) {
+     
+      dispatch(searchFiles({ query, page: currentPage, limit: itemsPerPage }));
+    } else {
+     
+      dispatch(allFiles({ page: currentPage, limit: itemsPerPage }));
+    }
+  }, [dispatch, query, currentPage, itemsPerPage]);
 
   const groupedFiles = useMemo(() => {
-    const grouped = filteredFiles.reduce((groups: any, file: any) => {
+    if (!files.length) return {};
+    const grouped = files.reduce((groups: any, file: any) => {
       const date = new Date(file.createdAt).toLocaleDateString();
       if (!groups[date]) {
         groups[date] = [];
@@ -45,9 +49,8 @@ const FileList = () => {
       groups[date].push(file);
       return groups;
     }, {});
-
     return grouped;
-  }, [filteredFiles]);
+  }, [files]);
 
   const totalPages = Math.ceil(countFiles / itemsPerPage);
 
@@ -55,11 +58,11 @@ const FileList = () => {
     <>
       {loading ? (
         <div className={css.spinnerContainer}>
-          <ClipLoader size={150} color={'#ff8c8c;'} loading={loading} />
+          <ClipLoader size={150} color={'#ff8c8c'} loading={loading} />
         </div>
       ) : (
         <>
-          {filteredFiles.length ? (
+          {files.length ? (
             <div className={css.listContainer}>
               {Object.keys(groupedFiles).map(date => (
                 <div key={date}>
